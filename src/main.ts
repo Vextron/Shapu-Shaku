@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import py from 'python-shell';
+import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import store from './store'
