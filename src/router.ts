@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Bissection from './views/Bissection.vue';
+import LinearSingleEquation from './views/LinearSingleEquation.vue';
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/bisect',
-      component: Bissection
+      path: '/linequa',
+      component: LinearSingleEquation
     }
   ]
 })
