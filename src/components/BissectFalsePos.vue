@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-layout row>
-      <v-flex xs12>
+    <v-layout row wrap>
+      <v-flex xs12 lg6>
         <v-card>
           <v-form>
             <v-container>
@@ -26,18 +26,24 @@
             </v-container>
             <v-container>
               <v-btn :loading="loading" :color="color" large @click="run(method)">Run</v-btn>
-              <v-btn color="cyan darken-3" large @click="graph()">Graph It!</v-btn>
+              <v-btn color="cyan darken-3" large @click="graphIt()">Graph It!</v-btn>
+              <v-btn color="red darken-4" large >Get PDF</v-btn>
             </v-container>
           </v-form>
         </v-card>
       </v-flex>
+      <v-flex xs12 lg6>
+        <graph ref="graph"></graph>
+      </v-flex>
     </v-layout>
     <v-layout row wrap class="mb-5">
-      <formula v-if="showTable" :function="info.function"></formula>
-      <v-flex xs12 lg6>
-        <graph></graph>
-      </v-flex>
-      <v-flex xs12 lg6>
+      <formula
+        ref="formula"
+        :loaded="showTable"
+        :data="{size: values.length, value: values[values.length - 1]}"
+      ></formula>
+
+      <v-flex xs12>
         <table-result v-if="showTable" :headers="headers" :data="values" class="ma-auto"></table-result>
       </v-flex>
     </v-layout>
@@ -54,8 +60,8 @@ import { PythonShell } from "python-shell";
 export default {
   components: {
     "table-result": Table,
-    "graph": Graph,
-    "formula": Formula
+    graph: Graph,
+    formula: Formula
   },
 
   props: ["color", "method"],
@@ -103,7 +109,7 @@ export default {
           this.info.var
         ]
       };
-      
+
       let pyshell = new PythonShell(`methods/${script}.py`, options);
 
       pyshell.on("message", message => {
@@ -121,10 +127,18 @@ export default {
       });
 
       pyshell.end((err, code, signal) => {
+        this.$refs.formula.computeFormula(this.info.function);
 
         this.loading = false;
         this.showTable = true;
       });
+    },
+
+    graphIt: function() {
+      this.$refs.graph.graph(
+        [this.info.a, this.info.b, 0.01, this.info.function, this.info.var],
+        this.info.function
+      );
     }
   }
 };
@@ -132,8 +146,5 @@ export default {
 
 
 <style>
-.chart {
-  width: 95%;
-}
 </style>
 

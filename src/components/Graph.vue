@@ -1,32 +1,56 @@
 <template>
   <v-card color="grey darken-4">
-    <line-chart v-if="data" :chartData="dataCollection" class="chart ma-auto"></line-chart>
+    <line-chart  :chartData="dataCollection" :options="options" class="chart ma-auto"></line-chart>
   </v-card>
 </template>
 <script>
 
 import LineChart from "../charts/LineChart.js";
+import { PythonShell } from "python-shell";
 
 export default {
 
-    props: ["pyargs"],
+  components: {
+
+    "line-chart": LineChart
+  },
 
   data: () => ({
     data: false,
     dataLoading: false,
 
-    dataCollection: null
+    dataCollection: null,
+    options: {
+
+      scales: {
+
+        xAxes: [{
+            gridLines: {
+                display: false
+            },
+            ticks: {
+                display: false
+            }
+        }],
+        yAxes: [{
+            gridLines: {
+                 display: false
+            }   
+        }]
+      }
+    }
+
   }),
 
   methods: {
-    graph: function() {
+    graph: function(args, fun) {
       this.data = false;
       this.dataLoading = true;
 
       let options = {
         mode: "text",
         pythonOptions: ["-u"],
-        args: this.pyargs
+        args: args
       };
 
       let dataset = {
@@ -37,6 +61,7 @@ export default {
       let pyshell = new PythonShell(`methods/GraphData.py`, options);
 
       pyshell.on("message", message => {
+
         let point = message.split(" ");
 
         dataset.label.push(Number(point[0]));
@@ -48,9 +73,10 @@ export default {
           labels: dataset.label,
           datasets: [
             {
-              label: this.info.function,
+              label: fun,
               data: dataset.data,
               borderColor: "#FF8F00",
+              backgroundColor: "rgba(255,171,0,0.1)",
               pointRadius: 0
             }
           ]
@@ -64,4 +90,8 @@ export default {
 };
 </script>
 <style>
+  .chart {
+
+    width: 65%;
+  }
 </style>

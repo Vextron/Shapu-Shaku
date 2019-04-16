@@ -4,12 +4,12 @@
       <h1 class="display-3">{{method}}</h1>
     </v-container>
     <v-container grid-list-xl text-xs-center>
-      <v-layout row wrap>
+      <v-layout row>
         <v-flex xs12>
           <v-card>
             <v-container>
               <h2 class="display-1">Methods</h2>
-              <v-radio-group v-model="method" class="align-center" row>
+              <v-radio-group v-model="method" class="justify-center" row>
                 <v-radio :color="color" label="Bissection" value="Bissection"></v-radio>
                 <v-radio :color="color" label="False Position" value="FalsePosition"></v-radio>
                 <v-radio :color="color" label="Newton's" value="Newton"></v-radio>
@@ -31,31 +31,20 @@
   </div>
 </template>
 <script>
-
 import BissectFalsePos from "../components/BissectFalsePos.vue";
 import Newton from "../components/Newton.vue";
 
 export default {
   components: {
     "bissect-false": BissectFalsePos,
-    "newton": Newton
+    newton: Newton
   },
 
   data: () => ({
     method: "Bissection",
 
-    color: "cyan",
-
-    
-  }),
-
-  computed: {
-    
-  },
-
-  methods: {
-
-  }
+    color: "cyan"
+  })
 };
 </script>
 

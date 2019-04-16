@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout row>
-      <v-flex xs12>
+      <v-flex xs12 lg6>
         <v-card>
           <v-form>
             <v-container>
@@ -24,7 +24,7 @@
                 </v-flex>
                 <v-flex xs12 sm12 md12>
                   <h6 class="title">Acceleration</h6>
-                  <v-radio-group v-model="accel" class="align-center" row>
+                  <v-radio-group v-model="accel" class="justify-center" row>
                     <v-radio :color="color" label="Normal" value="Newton"></v-radio>
                     <v-radio :color="color" label="Multiplicity" value="NewtonMul"></v-radio>
                     <v-radio :color="color" label="1/f '" value="NewtonDiff"></v-radio>

@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 lg12>
+  <v-flex v-if="loaded" xs12 lg12>
     <vue-mathjax class="title" :formula="getFormula"></vue-mathjax>
     <vue-mathjax class="title" :formula="getResult"></vue-mathjax>
   </v-flex>
@@ -9,11 +9,17 @@ import { VueMathjax } from "vue-mathjax";
 import { PythonShell } from "python-shell";
 
 export default {
+
+  components: {
+
+    "vue-mathjax": VueMathjax
+  },
+
   data: () => ({
     formula: ""
   }),
 
-  props: ["funcion"],
+  props: ["data", "loaded"],
 
   computed: {
     getFormula: function() {
@@ -21,18 +27,18 @@ export default {
     },
 
     getResult: function() {
-      return `$$ x_{${this.values.length}} = ${
-        this.values[this.values.length - 1].p
+      return `$$ x_{${this.data.size}} = ${
+        this.data.value.p
       } $$`;
     }
   },
 
   methods: {
-    computeFormula: function() {
+    computeFormula: function(fun) {
       let options = {
         mode: "text",
         pythonOptions: ["-u"],
-        args: [this.function]
+        args: [fun]
       };
 
       PythonShell.run(`methods/ToLatex.py`, options, (err, result) => {
