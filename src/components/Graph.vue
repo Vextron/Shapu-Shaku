@@ -1,17 +1,14 @@
 <template>
   <v-card color="grey darken-4">
-    <line-chart  :chartData="dataCollection" :options="options" class="chart ma-auto"></line-chart>
+    <line-chart :chartData="dataCollection" :options="options" class="chart ma-auto"></line-chart>
   </v-card>
 </template>
 <script>
-
 import LineChart from "../charts/LineChart.js";
 import { PythonShell } from "python-shell";
 
 export default {
-
   components: {
-
     "line-chart": LineChart
   },
 
@@ -21,25 +18,26 @@ export default {
 
     dataCollection: null,
     options: {
-
       scales: {
-
-        xAxes: [{
+        xAxes: [
+          {
             gridLines: {
-                display: false
+              display: false
             },
             ticks: {
-                display: false
+              display: false
             }
-        }],
-        yAxes: [{
+          }
+        ],
+        yAxes: [
+          {
             gridLines: {
-                 display: false
-            }   
-        }]
+              display: false
+            }
+          }
+        ]
       }
     }
-
   }),
 
   methods: {
@@ -61,7 +59,6 @@ export default {
       let pyshell = new PythonShell(`methods/GraphData.py`, options);
 
       pyshell.on("message", message => {
-
         let point = message.split(" ");
 
         dataset.label.push(Number(point[0]));
@@ -90,8 +87,7 @@ export default {
 };
 </script>
 <style>
-  .chart {
-
-    width: 65%;
-  }
+.chart {
+  width: 65%;
+}
 </style>

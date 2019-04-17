@@ -5,20 +5,7 @@
     </v-container>
     <v-container grid-list-xl text-xs-center>
       <v-layout row>
-        <v-flex xs12>
-          <v-card>
-            <v-container>
-              <h2 class="display-1">Methods</h2>
-              <v-radio-group v-model="method" class="justify-center" row>
-                <v-radio :color="color" label="Bissection" value="Bissection"></v-radio>
-                <v-radio :color="color" label="False Position" value="FalsePosition"></v-radio>
-                <v-radio :color="color" label="Newton's" value="Newton"></v-radio>
-                <v-radio :color="color" label="Secant" value="Secant"></v-radio>
-                <v-radio :color="color" label="Fixed Point" value="Fixed Point"></v-radio>
-              </v-radio-group>
-            </v-container>
-          </v-card>
-        </v-flex>
+        <methods v-on:update="method = $event" :color="color" :choices="choices"></methods>
       </v-layout>
 
       <bissect-false
@@ -34,17 +21,45 @@
 import BissectFalsePos from "../components/BissectFalsePos.vue";
 import Newton from "../components/Newton.vue";
 
+import MethodsGroup from "../components/MethodsGroup.vue";
+
 export default {
   components: {
     "bissect-false": BissectFalsePos,
-    newton: Newton
+    newton: Newton,
+    methods: MethodsGroup
   },
 
   data: () => ({
     method: "Bissection",
 
-    color: "cyan"
-  })
+    color: "cyan",
+
+    choices: [
+      {
+        label: "Bissection",
+        value: "Bissection"
+      },
+      {
+        label: "False Position",
+        value: "FalsePosition"
+      },
+      {
+        label: "Newton's",
+        value: "Newton"
+      },
+      {
+        label: "Secant",
+        value: "Secant"
+      },
+      {
+        label: "Fixed Point",
+        value: "Fixed Point"
+      }
+    ]
+  }),
+
+  methods: {}
 };
 </script>
 

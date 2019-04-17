@@ -27,7 +27,7 @@
             <v-container>
               <v-btn :loading="loading" :color="color" large @click="run(method)">Run</v-btn>
               <v-btn color="cyan darken-3" large @click="graphIt()">Graph It!</v-btn>
-              <v-btn color="red darken-4" large >Get PDF</v-btn>
+              <v-btn color="red darken-4" large disabled>Get PDF</v-btn>
             </v-container>
           </v-form>
         </v-card>
